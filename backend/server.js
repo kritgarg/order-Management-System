@@ -12,12 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: [
-    'https://order-management-system-khaki.vercel.app',
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://localhost:8080'
-  ],
+  origin: true, // Allow all origins temporarily
   credentials: true
 }));
 app.use(express.json());

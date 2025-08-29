@@ -4,6 +4,7 @@ import { Dashboard } from "@/components/Dashboard";
 import { OrderList } from "@/components/OrderList";
 import { OrderForm } from "@/components/OrderForm";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { DevelopmentWarning } from "@/components/DevelopmentWarning";
 import { useOrders } from "@/hooks/useOrders";
 import { useToast } from "@/hooks/use-toast";
 
@@ -153,7 +154,10 @@ const Index = () => {
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto p-6">{renderCurrentPage()}</main>
+        <main className="flex-1 overflow-auto p-6">
+          <DevelopmentWarning />
+          {renderCurrentPage()}
+        </main>
       </div>
 
       <input

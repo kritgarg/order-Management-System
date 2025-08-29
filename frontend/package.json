@@ -10,7 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --host 0.0.0.0 --port 4173",
     "clean": "rm -rf dist node_modules/.vite",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "setup-env": "node create-env.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

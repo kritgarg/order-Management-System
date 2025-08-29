@@ -13,14 +13,21 @@ export const useOrders = () => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        console.log('Fetching orders...');
+        console.log('🔄 Fetching orders...');
+        console.log('🔍 API URL being used:', import.meta.env.VITE_API_URL);
+        
+        // Clear any cached data first
+        setOrders([]);
+        setError(null);
+        
         const data = await api.getOrders();
-        console.log('Orders fetched:', data);
+        console.log('✅ Orders fetched:', data);
         setOrders(data);
         setError(null);
       } catch (err) {
-        console.error('Failed to fetch orders:', err);
+        console.error('❌ Failed to fetch orders:', err);
         setError(err.message);
+        setOrders([]); // Clear any cached data
         toast({
           title: "Error",
           description: err.message,

@@ -49,8 +49,5 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
-    'import.meta.env.VITE_API_URL': JSON.stringify(
-      process.env.VITE_API_URL || 'http://localhost:3000/api'
-    ),
   },
 }));

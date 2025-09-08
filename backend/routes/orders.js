@@ -15,12 +15,8 @@ const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-// Get all orders with pagination and filtering
+// Get all orders with optional pagination and filtering
 router.get('/', asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
-
   const query = {};
 
   // Add filters if provided
@@ -39,7 +35,26 @@ router.get('/', asyncHandler(async (req, res) => {
     throw new Error('Database connection unavailable');
   }
 
-  // Use MongoDB only
+  const hasPagination = typeof req.query.limit !== 'undefined' || typeof req.query.page !== 'undefined';
+
+  if (!hasPagination) {
+    // Return all orders by default (no pagination applied)
+    const orders = await Order.find(query).sort({ createdAt: -1 });
+    return res.json({
+      orders: orders || [],
+      pagination: {
+        total: orders ? orders.length : 0,
+        page: 1,
+        pages: 1
+      }
+    });
+  }
+
+  // Apply pagination only when explicitly requested
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
   const [orders, total] = await Promise.all([
     Order.find(query)
       .sort({ createdAt: -1 })

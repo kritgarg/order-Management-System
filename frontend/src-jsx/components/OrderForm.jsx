@@ -190,6 +190,7 @@ export const OrderForm = ({ order, onSubmit, onCancel }) => {
     "annealing",
     "machining",
     "bearing/wobler",
+    "ready",
     "dispached",
   ];
   const gradeOptions = [

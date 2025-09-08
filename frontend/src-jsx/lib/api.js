@@ -55,9 +55,10 @@ export const api = {
       const data = await response.json();
       console.log('🔍 Raw API response:', data);
       
-      // Backend returns orders array directly, not wrapped in 'orders' property
-      const orders = Array.isArray(data) ? data : (data.orders || []);
+      // Backend returns paginated response with orders array and pagination info
+      const orders = data.orders || [];
       console.log('🔍 Extracted orders:', orders);
+      console.log('🔍 Pagination info:', data.pagination);
       return orders;
     } catch (error) {
       console.error('Error fetching orders:', error);

@@ -33,6 +33,11 @@ export const StatusBadge = ({ status }) => {
           label: "Dispached",
           className: "bg-green-100 text-green-800 hover:bg-green-200",
         };
+      case "ready":
+        return {
+          label: "Ready",
+          className: "bg-emerald-100 text-emerald-800 hover:bg-emerald-200",
+        };
       default:
         return {
           label: status,

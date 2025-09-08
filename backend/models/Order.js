@@ -29,7 +29,7 @@ const rollSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ['Pending', 'casting', 'annealing', 'machining', 'bearing/wobler', 'dispached'],
+      values: ['Pending', 'casting', 'annealing', 'machining', 'bearing/wobler', 'ready', 'dispached'],
       message: '{VALUE} is not a valid status'
     },
     default: 'Pending'

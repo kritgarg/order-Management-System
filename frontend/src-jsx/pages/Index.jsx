@@ -7,6 +7,8 @@ import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { DevelopmentWarning } from "@/components/DevelopmentWarning";
 import { useOrders } from "@/hooks/useOrders";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -15,6 +17,14 @@ const Index = () => {
   const { orders, addOrder, updateOrder, deleteOrder, importOrders, exportOrders } =
     useOrders();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("oms_auth");
+    } catch {}
+    navigate("/login", { replace: true });
+  };
 
   const handleEditOrder = (order) => {
     setEditingOrder(order);
@@ -150,7 +160,10 @@ const Index = () => {
         <header className="bg-white shadow-sm border-b px-6 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-gray-900">{getPageTitle()}</h1>
-            <ConnectionStatus />
+            <div className="flex items-center gap-3">
+              <ConnectionStatus />
+              <Button variant="outline" onClick={handleLogout}>Logout</Button>
+            </div>
           </div>
         </header>
 

@@ -15,11 +15,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { motion } from "framer-motion";
 
 export const Dashboard = ({ orders }) => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const currentYear = new Date().getFullYear();
-
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -68,7 +68,13 @@ export const Dashboard = ({ orders }) => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
@@ -78,7 +84,9 @@ export const Dashboard = ({ orders }) => {
             <div className="text-2xl font-bold">{stats.total}</div>
           </CardContent>
         </Card>
+        </motion.div>
 
+        <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In Progress</CardTitle>
@@ -90,7 +98,9 @@ export const Dashboard = ({ orders }) => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
+        <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Orders Completed</CardTitle>
@@ -100,7 +110,9 @@ export const Dashboard = ({ orders }) => {
             <div className="text-2xl font-bold">{stats.completedOrders}</div>
           </CardContent>
         </Card>
+        </motion.div>
 
+        <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Orders This Month</CardTitle>
@@ -136,9 +148,16 @@ export const Dashboard = ({ orders }) => {
             </p>
           </CardContent>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <motion.div
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
         <Card>
           <CardHeader>
             <CardTitle>Status Overview</CardTitle>
@@ -172,7 +191,9 @@ export const Dashboard = ({ orders }) => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
         <Card>
           <CardHeader>
             <CardTitle>Recent Orders</CardTitle>
@@ -199,7 +220,8 @@ export const Dashboard = ({ orders }) => {
             </div>
           </CardContent>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

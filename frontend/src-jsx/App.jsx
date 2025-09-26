@@ -3,12 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,22 @@ const App = () => {
     };
   }, []);
 
+  const isAuthed = () => {
+    try {
+      const raw = localStorage.getItem("oms_auth");
+      return !!raw;
+    } catch {
+      return false;
+    }
+  };
+
+  const ProtectedRoute = ({ children }) => {
+    if (!isAuthed()) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  };
+
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -36,7 +53,15 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Index />
+                  </ProtectedRoute>
+                }
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

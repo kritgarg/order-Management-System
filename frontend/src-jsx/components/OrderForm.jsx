@@ -1,4 +1,4 @@
- import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,13 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Plus, Trash } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 const LAST_DIMENSIONS_KEY = "lastDimensionsFor2Rolls";
 
 function generateOrderNumber() {
   return `CS-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }
-
 export const OrderForm = ({ order, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     orderNumber: generateOrderNumber(),
@@ -40,6 +41,9 @@ export const OrderForm = ({ order, onSubmit, onCancel }) => {
     ],
   });
   const [showSuggestion, setShowSuggestion] = useState({});
+  const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false);
+  const [duplicateIndex, setDuplicateIndex] = useState(null);
+  const [duplicateCount, setDuplicateCount] = useState(1);
 
   useEffect(() => {
     if (order) {
@@ -177,6 +181,56 @@ export const OrderForm = ({ order, onSubmit, onCancel }) => {
     });
   };
 
+  // Duplicate a roll N times, copying all fields except rollNumber
+  const applyDuplicate = (index, count) => {
+    if (!Number.isFinite(count) || count <= 0) return;
+    setFormData((prev) => {
+      const base = prev.rolls[index];
+      if (!base) return prev;
+      const duplicates = Array.from({ length: count }, () => ({
+        ...base,
+        rollNumber: "",
+      }));
+      const rolls = [
+        ...prev.rolls.slice(0, index + 1),
+        ...duplicates,
+        ...prev.rolls.slice(index + 1),
+      ];
+      return { ...prev, rolls, quantity: rolls.length };
+    });
+  };
+
+  const openDuplicateDialog = (index) => {
+    setDuplicateIndex(index);
+    setDuplicateCount(1);
+    setDuplicateDialogOpen(true);
+  };
+
+  const confirmDuplicate = () => {
+    if (duplicateIndex == null) return;
+    const count = parseInt(duplicateCount, 10) || 1;
+    applyDuplicate(duplicateIndex, count);
+    setDuplicateDialogOpen(false);
+  };
+
+  const deleteRoll = (index) => {
+    setFormData((prev) => {
+      const rolls = prev.rolls.filter((_, i) => i !== index);
+      if (rolls.length === 0) {
+        rolls.push({
+          rollNumber: "",
+          hardness: "",
+          machining: "",
+          rollDescription: "",
+          dimensions: "",
+          status: "Pending",
+          grade: "",
+        });
+      }
+      return { ...prev, rolls, quantity: rolls.length };
+    });
+  };
+
   const rollDescriptions = [
     "SHAFT",
     "ROLL",
@@ -220,6 +274,29 @@ export const OrderForm = ({ order, onSubmit, onCancel }) => {
                 readOnly
               />
             </div>
+
+          {/* Duplicate Roll Dialog */}
+          <Dialog open={duplicateDialogOpen} onOpenChange={setDuplicateDialogOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Duplicate roll</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-2">
+                <Label htmlFor="dup-count">How many duplicates to create?</Label>
+                <Input
+                  id="dup-count"
+                  type="number"
+                  min={1}
+                  value={duplicateCount}
+                  onChange={(e) => setDuplicateCount(e.target.value)}
+                />
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setDuplicateDialogOpen(false)}>Cancel</Button>
+                <Button type="button" onClick={confirmDuplicate}>Duplicate</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
             <div>
               <Label htmlFor="companyName">Company Name</Label>
               <Input
@@ -298,7 +375,17 @@ export const OrderForm = ({ order, onSubmit, onCancel }) => {
           <div className="space-y-6 mt-6  max-h-[400px] overflow-y-auto pr-2 border rounded-md bg-white">
             {formData.rolls.map((roll, idx) => (
               <div key={idx} className="border rounded-lg p-4 bg-gray-50">
-                <div className="font-semibold mb-2">Roll {idx + 1}</div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="font-semibold">Roll {idx + 1}</div>
+                  <div className="flex gap-2">
+                    <Button type="button" variant="outline" size="sm" onClick={() => openDuplicateDialog(idx)} title="Duplicate this roll">
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                    <Button type="button" variant="destructive" size="sm" onClick={() => deleteRoll(idx)} title="Delete this roll">
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                   <div>
                     <Label>Roll Number</Label>

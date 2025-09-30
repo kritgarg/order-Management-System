@@ -430,7 +430,7 @@ export const OrderList = ({ orders, onEditOrder, onDeleteOrder, onUpdateOrder })
 
       {/* Inline Edit Dialog */}
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Order Inline</DialogTitle>
             <DialogDescription>

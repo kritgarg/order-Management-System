@@ -113,6 +113,7 @@ const Index = () => {
             orders={orders}
             onEditOrder={handleEditOrder}
             onDeleteOrder={handleDeleteOrder}
+            onUpdateOrder={updateOrder}
           />
         );
       case "add-order":

@@ -75,7 +75,7 @@ export const Dashboard = ({ orders }) => {
         transition={{ duration: 0.5 }}
       >
         <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-        <Card>
+        <Card className="h-36 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200/60 bg-white bg-gradient-to-b from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
@@ -87,7 +87,7 @@ export const Dashboard = ({ orders }) => {
         </motion.div>
 
         <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-        <Card>
+        <Card className="h-36 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200/60 bg-white bg-gradient-to-b from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In Progress</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
@@ -101,7 +101,7 @@ export const Dashboard = ({ orders }) => {
         </motion.div>
 
         <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-        <Card>
+        <Card className="h-36 rounded-2xl shadow-lg border border-slate-200/60 bg-white bg-gradient-to-b from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Orders Completed</CardTitle>
             <CheckCircle className="h-4 w-4 text-muted-foreground" />
@@ -113,7 +113,7 @@ export const Dashboard = ({ orders }) => {
         </motion.div>
 
         <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-        <Card>
+        <Card className="h-36 rounded-2xl shadow-lg border border-slate-200/60 bg-white bg-gradient-to-b from-white to-slate-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Orders This Month</CardTitle>
             <Popover>
@@ -157,34 +157,34 @@ export const Dashboard = ({ orders }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
-        <Card>
+        <motion.div className="h-full" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
+        <Card className="h-full rounded-2xl shadow-lg border border-slate-200/60 bg-white">
           <CardHeader>
             <CardTitle>Status Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Pending</span>
                 <Badge variant="secondary">{stats.pending}</Badge>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Casting</span>
                 <Badge variant="secondary">{stats.casting}</Badge>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Annealing</span>
                 <Badge variant="secondary">{stats.annealing}</Badge>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Machining</span>
                 <Badge variant="secondary">{stats.machining}</Badge>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Bearing/Wobler</span>
                 <Badge variant="secondary">{stats.bearingWobler}</Badge>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center rounded-xl border border-slate-100 bg-slate-50/50 px-4 py-3">
                 <span>Dispached</span>
                 <Badge variant="secondary">{stats.dispached}</Badge>
               </div>
@@ -193,8 +193,8 @@ export const Dashboard = ({ orders }) => {
         </Card>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-        <Card>
+        <motion.div className="h-full" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+        <Card className="h-full rounded-2xl shadow-lg border border-slate-200/60 bg-white">
           <CardHeader>
             <CardTitle>Recent Orders</CardTitle>
           </CardHeader>

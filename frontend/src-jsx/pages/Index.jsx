@@ -149,26 +149,24 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gradient-to-br from-slate-100 to-slate-200">
       <Sidebar
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        onImportJson={handleImportJson}
-        onExportJson={exportOrders}
       />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white shadow-sm border-b px-6 py-4">
+        <header className="mt-4 mx-6 bg-white/60 backdrop-blur-xl shadow-lg border border-white/70 rounded-2xl px-8 py-5">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">{getPageTitle()}</h1>
-            <div className="flex items-center gap-3">
+            <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900">{getPageTitle()}</h1>
+            <div className="flex items-center gap-4">
               <ConnectionStatus />
               <Button variant="outline" onClick={handleLogout}>Logout</Button>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-8">
           <DevelopmentWarning />
           {renderCurrentPage()}
         </main>

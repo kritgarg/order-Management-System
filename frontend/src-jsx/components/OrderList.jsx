@@ -11,7 +11,6 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
 import { Edit, Trash2, Search, ChevronDown, ChevronUp } from "lucide-react";
-import { saveAs } from 'file-saver';
 import {
   Dialog,
   DialogContent,
@@ -217,11 +216,6 @@ export const OrderList = ({ orders, onEditOrder, onDeleteOrder, onUpdateOrder })
   const totalPages = Math.ceil(sortedOrders.length / ORDERS_PER_PAGE);
   const paginatedOrders = sortedOrders.slice((page - 1) * ORDERS_PER_PAGE, page * ORDERS_PER_PAGE);
 
-  const handleExportJson = () => {
-    const jsonString = JSON.stringify(orders, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    saveAs(blob, 'orders.json');
-  };
 
   return (
     <div className="space-y-6">
@@ -313,12 +307,7 @@ export const OrderList = ({ orders, onEditOrder, onDeleteOrder, onUpdateOrder })
         </Select>
       </div>
 
-      {/* Export Button */}
-      <div className="flex justify-end space-x-2">
-        <Button onClick={handleExportJson} variant="outline">
-          Export to JSON
-        </Button>
-      </div>
+
 
       {/* Orders */}
       <div className="grid gap-4">

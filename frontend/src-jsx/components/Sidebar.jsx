@@ -9,9 +9,6 @@ export const Sidebar = ({
     { id: "dashboard", label: "Dashboard", icon: Home },
     { id: "orders", label: "All Orders", icon: FileText },
     { id: "add-order", label: "Add Order", icon: Plus },
-    // External links
-    { id: "material-certificate", label: "Material certificate", icon: FileText, href: "https://material-certifcate.vercel.app/" },
-    { id: "bill-generator", label: "Bill generator", icon: FileText, href: "https://bill-genrator.vercel.app/" },
   ];
 
   return (

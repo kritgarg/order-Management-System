@@ -9,6 +9,9 @@ export const Sidebar = ({
     { id: "dashboard", label: "Dashboard", icon: Home },
     { id: "orders", label: "All Orders", icon: FileText },
     { id: "add-order", label: "Add Order", icon: Plus },
+    // External links
+    { id: "material-certificate", label: "Material certificate", icon: FileText, href: "https://material-certifcate.vercel.app/" },
+    { id: "bill-generator", label: "Bill generator", icon: FileText, href: "https://bill-genrator.vercel.app/" },
   ];
 
   return (
@@ -26,26 +29,46 @@ export const Sidebar = ({
             const Icon = item.icon;
             return (
               <li key={item.id}>
-                <button
-                  onClick={() => onPageChange(item.id)}
-                  className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
-                    currentPage === item.id
-                      ? "bg-orange-500 text-white shadow-sm"
-                      : "text-slate-300 hover:bg-white/5",
-                  )}
-                >
-                  <span className={cn(
-                    "inline-flex items-center justify-center rounded-lg p-2",
-                    currentPage === item.id ? "bg-white/20" : "bg-white/10"
-                  )}>
-                    <Icon
-                      size={18}
-                      className={cn(currentPage === item.id ? "text-white" : "text-slate-300")}
-                    />
-                  </span>
-                  <span className="font-medium">{item.label}</span>
-                </button>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
+                      "text-slate-300 hover:bg-white/5"
+                    )}
+                  >
+                    <span className={cn(
+                      "inline-flex items-center justify-center rounded-lg p-2",
+                      "bg-white/10"
+                    )}>
+                      <Icon size={18} className="text-slate-300" />
+                    </span>
+                    <span className="font-medium">{item.label}</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => onPageChange(item.id)}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
+                      currentPage === item.id
+                        ? "bg-orange-500 text-white shadow-sm"
+                        : "text-slate-300 hover:bg-white/5",
+                    )}
+                  >
+                    <span className={cn(
+                      "inline-flex items-center justify-center rounded-lg p-2",
+                      currentPage === item.id ? "bg-white/20" : "bg-white/10"
+                    )}>
+                      <Icon
+                        size={18}
+                        className={cn(currentPage === item.id ? "text-white" : "text-slate-300")}
+                      />
+                    </span>
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                )}
               </li>
             );
           })}

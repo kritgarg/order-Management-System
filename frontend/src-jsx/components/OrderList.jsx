@@ -192,14 +192,12 @@ export const OrderList = ({ orders, onEditOrder, onDeleteOrder, onUpdateOrder })
         const rMach = normalize(roll?.machining);
         const rGrade = normalize(roll?.grade);
         const rDesc = normalize(roll?.rollDescription);
-        const rDims = normalize(roll?.dimensions);
         const rStatus = normalize(roll?.status);
         return (
           rNum.includes(searchNorm) ||
           rMach.includes(searchNorm) ||
           rGrade.includes(searchNorm) ||
           rDesc.includes(searchNorm) ||
-          rDims.includes(searchNorm) ||
           rStatus.includes(searchNorm)
         );
       }));
